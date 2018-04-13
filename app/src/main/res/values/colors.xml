@@ -4,4 +4,7 @@
     <color name="colorPrimaryDark">#070716</color>
     <color name="colorAccent">#FF4081</color>
     <color name="opaque_red">#f00</color>
+
+    <color name="baseReleaseColor">#212121</color>
+    <color name="basePressColor">#FAFAFA</color>
 </resources>

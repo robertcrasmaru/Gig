@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.AuthResult;
@@ -25,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
+import dmax.dialog.SpotsDialog;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -94,7 +97,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int i) {
 
-                //dialog.dismiss();
+                dialog.dismiss();
+
+
+
 
                 if(TextUtils.isEmpty(editEmail.getText().toString())){
                     Snackbar.make(baseLayout,"Please enter email", Snackbar.LENGTH_SHORT).show();
@@ -115,6 +121,9 @@ public class MainActivity extends AppCompatActivity {
                     Snackbar.make(baseLayout,"Please enter phone number", Snackbar.LENGTH_SHORT).show();
                     return;
                 }
+
+
+
             }
         });
 
@@ -154,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int i) {
 
                 dialog.dismiss();
+                buttonSignIn.setEnabled(false);
 
                 if(TextUtils.isEmpty(editEmail.getText().toString())){
                     Snackbar.make(baseLayout,"Please enter email", Snackbar.LENGTH_SHORT).show();
@@ -165,14 +175,28 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
+                final SpotsDialog waitDialog = new SpotsDialog(MainActivity.this);
+
+                waitDialog.show();
+
                 auth.signInWithEmailAndPassword(editEmail.getText().toString(),editPassword.getText().toString())
                         .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                             @Override
                             public void onSuccess(AuthResult authResult) {
+                                waitDialog.dismiss();
                                 startActivity(new Intent(MainActivity.this,Welcome.class));
                                 finish();
                             }
-                        });
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        waitDialog.dismiss();
+                        Snackbar.make(baseLayout,"Failed"+e.getMessage(),Snackbar.LENGTH_SHORT).show();
+                        buttonSignIn.setEnabled(true);
+                    }
+                });
+
+
 
             }
 
