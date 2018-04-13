@@ -76,9 +76,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void showRegisterForm(){
 
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("REGISTER");
-        dialog.setMessage("Register with email");
+        AlertDialog.Builder form = new AlertDialog.Builder(this);
+        form.setTitle("REGISTER");
+        form.setMessage("Register with email");
 
         LayoutInflater inflater = LayoutInflater.from(this);
         View register_layout = inflater.inflate(R.layout.register_form,null);
@@ -88,9 +88,9 @@ public class MainActivity extends AppCompatActivity {
         final MaterialEditText editPassword = (MaterialEditText) register_layout.findViewById(R.id.editPassword);
         final MaterialEditText editPhone = (MaterialEditText) register_layout.findViewById(R.id.editPhone);
 
-        dialog.setView(register_layout);
+        form.setView(register_layout);
         //AlertDialog build = form.create();
-        dialog.setPositiveButton("REGISTER", new DialogInterface.OnClickListener() {
+        form.setPositiveButton("REGISTER", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
 
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        dialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+        form.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        dialog.show();
+        form.show();
 
     }
 
