@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -25,6 +26,9 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-scalars:2.3.0'
     compile 'com.github.glomadrian:MaterialAnimatedSwitch:1.1@aar'
     compile 'com.firebase:geofire-android:2.1.2'
     compile 'com.github.d-max:spots-dialog:0.7@aar'
@@ -37,6 +41,6 @@ dependencies {
     compile 'com.google.firebase:firebase-auth:9.6.0'
     compile 'com.google.android.gms:play-services-maps:9.6.0'
     compile 'com.google.android.gms:play-services:9.6.0'
+
     testCompile 'junit:junit:4.12'
 }
-apply plugin: 'com.google.gms.google-services'

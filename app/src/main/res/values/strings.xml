@@ -2,4 +2,5 @@
     <string name="app_name">Gig</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_welcome">Map</string>
+    <string name="google_direction_api">AIzaSyCUMMoyH27Gict53wOIgViUXqSWM23DfhU</string>
 </resources>
