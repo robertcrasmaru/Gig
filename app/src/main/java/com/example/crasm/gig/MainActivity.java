@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
@@ -18,6 +19,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
+import com.example.crasm.gig.Models.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -121,6 +123,38 @@ public class MainActivity extends AppCompatActivity {
                     Snackbar.make(baseLayout,"Please enter phone number", Snackbar.LENGTH_SHORT).show();
                     return;
                 }
+
+                Log.d("ERR user ", editEmail.getText().toString());
+                Log.d("ERR user pass", editPassword.getText().toString() );
+                auth.createUserWithEmailAndPassword(editEmail.getText().toString(), editPassword.getText().toString())
+                        .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+
+                            @Override
+
+
+                            public void onSuccess(AuthResult authResult) {
+
+
+                                Snackbar.make(baseLayout,"Successfully regitered", Snackbar.LENGTH_SHORT).show();
+                                User user = new User();
+                                user.setEmail(editEmail.getText().toString());
+                                user.setPassword(editPassword.getText().toString());
+                                user.setName(editName.getText().toString());
+                                user.setPhone(editPhone.getText().toString());
+
+                                users.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                        .setValue(user)
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Snackbar.make(baseLayout,"Failed to register", Snackbar.LENGTH_SHORT).show();
+                                            }
+
+                                        });
+
+                            }
+                        });
+
 
 
 
